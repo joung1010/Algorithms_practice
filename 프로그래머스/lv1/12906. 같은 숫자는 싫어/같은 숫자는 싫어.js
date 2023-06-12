@@ -1,8 +1,6 @@
-function solution(arr) {
-    const stack = [];
-    arr.forEach((item, idx) => {
-        if (stack[stack.length - 1] === item) return;
-        stack.push(item);
-    });
-    return stack;
+
+// 다른사람 풀이
+function solution(arr)
+{
+    return arr.filter((val,index) => val != arr[index+1]);
 }
