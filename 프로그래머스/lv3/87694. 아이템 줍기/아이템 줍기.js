@@ -42,20 +42,21 @@ function solution(rectangle, characterX, characterY, itemX, itemY) {
     itemX *= 2;
     itemY *= 2;
     queue.push({x: characterX, y: characterY, move: 0});
-    board[characterX][characterY] = 0;
+
     while (queue.length) {
         const {x, y, move} = queue.shift();
         if (x === itemX && y === itemY) return move / 2;
 
-        for (let i = 0; i < 4; i++) {
-            const [nX, nY] = [x + moveX[i], y + moveY[i]];
-            if (0 > nX || nX > MAX_LENGTH) continue;
-            if (0 > nY || nY > MAX_LENGTH) continue;
-            if (board[nX][nY] !== 1) continue;
+        if (0 > x || x > MAX_LENGTH) continue;
+        if (0 > y || y > MAX_LENGTH) continue;
+        if (board[x][y] !== 1) continue;
 
-            board[nX][nY] = 0;  // 방문 처리
-            queue.push({x:nX,y:nY, move: move + 1});
-        }
+        board[x][y] = 0; // 방문 처리
+        // 이동한 좌표가 이동가능한 좌표인지 체크
+        board[x + 1][y] === 1 && queue.push({x: x + 1, y, move: move + 1});
+        board[x - 1][y] === 1 && queue.push({x: x - 1, y, move: move + 1});
+        board[x][y + 1] === 1 && queue.push({x, y: y + 1, move: move + 1});
+        board[x][y - 1] === 1 && queue.push({x, y: y - 1, move: move + 1});
     }
     return 0;
 }
