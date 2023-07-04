@@ -1,24 +1,15 @@
 function solution(n, words) {
-    const people = Array.from({length: n}, () => []);
-    const visited = [];
-    const queue = [];
-
-    queue.push(words.splice(0, n));
-    let preV;
-    while (queue.length) {
-        const game = queue.pop();
-        if (!game.length) break;
-
-        for (let i = 0; i < n; i++) {
-            const word = game[i];
-            if (visited.includes(word)) return [i + 1, people[i].length + 1];
-            if (preV && preV[preV.length - 1] !== word[0]) return [i + 1, people[i].length + 1];
-
-            people[i].push(word);
-            preV = word;
-            visited.push(word);
+    let set = new Set();
+    set.add(words[0]);
+    for(let i=1; i<words.length; i++){
+        if(set.has(words[i])){
+            return [i%n+1, Math.floor(i/n)+1];
+        }else{
+            set.add(words[i]);
+        } 
+        if(words[i-1][words[i-1].length-1] !== words[i][0]){
+            return [i%n+1, Math.floor(i/n)+1];
         }
-        queue.push(words.splice(0, n));
     }
-    return [0, 0];
+    return [0,0];
 }
