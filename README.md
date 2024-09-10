@@ -1,1 +1,1 @@
-# JS-Algorithms_practice
+# Algorithms_practice
