@@ -13,30 +13,30 @@ public class Main {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < testCase; i++) {
             String[] line = br.readLine().split(" ");
-            Integer x = Integer.parseInt(line[0]);
-            Integer y = Integer.parseInt(line[1]);
+            int x = Integer.parseInt(line[0]);
+            int y = Integer.parseInt(line[1]);
+
             Integer result = resolve(x, y);
             sb.append(result).append("\n");
         }
         System.out.println(sb);
     }
 
-    public static Integer resolve(int num1, int num2) {
-        if (num1 == num2) {
+    public static Integer resolve
+            (int x, int y) {
+
+        if (x == y) {
             return 1;
         }
-        BigInteger x = BigInteger.valueOf(num1);
-        BigInteger y = BigInteger.valueOf(num2);
+        int num = y - x;
 
-        BigInteger num = y.subtract(x);
-
-        BigInteger result1 = BigInteger.ONE;
-        for (int i = y.intValue(); i > num.intValue(); i--) {
+        BigInteger result1 = BigInteger.valueOf(y);
+        for (int i = y - 1; i > num; i--) {
             result1 = result1.multiply(BigInteger.valueOf(i));
         }
 
-        BigInteger result2 = BigInteger.ONE;
-        for (int i = x.intValue(); i > 0; i--) {
+        BigInteger result2 = BigInteger.valueOf(x);
+        for (int i = x - 1; i > 0; i--) {
             result2 = result2.multiply(BigInteger.valueOf(i));
         }
 
