@@ -9,27 +9,23 @@ public class Main {
     public static final String ENTER = "ENTER";
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+            int recordCount = Integer.parseInt(br.readLine());
+            int greetingCount = 0;
+            Set<String> greetedUsers = new HashSet<>();
 
-        Set<String> emoji = new HashSet<String>();
-        int N = Integer.parseInt(br.readLine());
-
-        int count = 0;
-        for (int i = 0; i < N; i++) {
-            String chat = br.readLine();
-            if(ENTER.equals(chat)) {
-                emoji.clear();
-                continue;
+            for (int i = 0; i < recordCount; i++) {
+                String record = br.readLine();
+                if (ENTER.equals(record)) {
+                    greetedUsers.clear();
+                } else if (greetedUsers.add(record)) {
+                    greetingCount++;
+                }
             }
-            
-            if(!emoji.contains(chat)) {
-                count++;
-                emoji.add(chat);
-            }
-            
+            System.out.println(greetingCount);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        System.out.println(count);
 
     }
 
