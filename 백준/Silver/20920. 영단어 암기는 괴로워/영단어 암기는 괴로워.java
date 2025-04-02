@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 public class Main {
@@ -12,29 +11,45 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] inputs = br.readLine().split(" ");
-        int N = Integer.parseInt(inputs[0]);
-        int M = Integer.parseInt(inputs[1]);
+        String[] strings = br.readLine().split(" ");
+        int N = Integer.parseInt(strings[0]);
+        int M = Integer.parseInt(strings[1]);
 
         Map<String, Integer> map = new HashMap<>();
         for (int i = 0; i < N; i++) {
-            String word = br.readLine();
-            map.put(word, map.getOrDefault(word, 0) + 1);
+            String s = br.readLine();
+            map.put(s, map.getOrDefault(s, 0) + 1);
         }
 
-        String result = map.keySet().stream()
-                .filter(s -> s.length() >= M)
-                .sorted(
-                        Comparator.comparing((String s) -> map.get(s)).reversed()
-                                .thenComparing(Comparator.comparing(String::length).reversed())
-                                .thenComparing(Comparator.naturalOrder())
-                )
-                .collect(Collectors.joining("\n"));
+        List<String> words = new ArrayList<>();
+        for (String word : map.keySet()) {
+            if (word.length() >= M) {
+                words.add(word);
+            }
+        }
+        words.sort((a, b) -> {
+            int freqCompare = map.get(b) - map.get(a);
+            if (freqCompare != 0) {
+                return freqCompare;
+            }
+            int lenCompare = b.length() - a.length();
+            if (lenCompare != 0) {
+                return lenCompare;
+            }
+            return a.compareTo(b);
+        });
+
+        StringBuilder sb = new StringBuilder();
+        for (String word : words) {
+            sb.append(word).append("\n");
+        }
 
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        bw.write(result);
+        bw.write(sb.toString());
         bw.flush();
         bw.close();
+
+
     }
 
 
